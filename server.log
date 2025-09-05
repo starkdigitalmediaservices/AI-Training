@@ -1,0 +1,69 @@
+nohup: ignoring input
+🧮 Calculator Agent initialized
+📍 My IP: 192.168.0.104:5001
+🔗 Unit Converter: http://localhost:5002
+📊 Statistics Agent: http://localhost:5003
+🧮 Network Calculator Agent Starting...
+🧮 Testing Calculator Agent...
+✅ add: 60
+✅ multiply: 40
+✅ square_root: 4.0
+✅ percentage: 30.0
+
+🌐 Testing Network Connectivity...
+❌ Unit Converter: Connection failed (http://localhost:5002) - HTTPConnectionPool(host='localhost', port=5002): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f612dc2f070>: Failed to establish a new connection: [Errno 111] Connection refused'))
+❌ Statistics: Connection failed (http://localhost:5003) - HTTPConnectionPool(host='localhost', port=5003): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f612dc2faf0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+🚀 Server starting on 0.0.0.0:5001
+📍 Access from other systems: http://192.168.0.104:5001
+ * Serving Flask app 'calculator_agent_network'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.0.104:5001
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 550-009-190
+127.0.0.1 - - [04/Sep/2025 18:07:08] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:08] "GET /static/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:08] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:08] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:07:21] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:21] "POST /config/test HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:07:30] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:30] "POST /config/test HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:07:52] "GET /config/agents HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:02] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:02] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [04/Sep/2025 18:08:02] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [04/Sep/2025 18:08:02] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:08:04] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:04] "POST /config/test HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:09] "PUT /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:08:21] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:21] "POST /config/test HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:35] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [04/Sep/2025 18:08:35] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [04/Sep/2025 18:08:35] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:08:36] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:08:36] "POST /config/test HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:09:03] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:09:03] "POST /message HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:09:03] "POST /route HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:09:43] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [04/Sep/2025 18:09:43] "POST /message HTTP/1.1" 200 -
+127.0.0.1 - - [04/Sep/2025 18:09:43] "POST /route HTTP/1.1" 200 -
+192.168.0.104 - - [05/Sep/2025 11:30:40] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 11:30:40] "POST /config/test HTTP/1.1" 200 -
+192.168.0.104 - - [05/Sep/2025 11:31:29] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 11:31:29] "POST /config/test HTTP/1.1" 200 -
+192.168.0.104 - - [05/Sep/2025 11:31:58] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 11:31:59] "POST /config/test HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 11:34:20] "GET /config/agents HTTP/1.1" 200 -
+192.168.0.104 - - [05/Sep/2025 11:34:20] "POST /message HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 11:34:20] "POST /route HTTP/1.1" 200 -
+192.168.0.104 - - [05/Sep/2025 12:02:00] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [05/Sep/2025 12:02:00] "POST /config/test HTTP/1.1" 200 -

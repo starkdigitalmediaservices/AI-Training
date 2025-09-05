@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧮 A2A Math Agents - Beautiful Pipeline</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white overflow-x-hidden">
+  <!-- Animated Background -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-40 left-40 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-2 animate-fade-in">
+        🧮 A2A Math Agents
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-300 animate-fade-in-delay">Beautiful Agent-to-Agent Communication Pipeline</p>
+      <div class="flex justify-center space-x-2 mt-4">
+        <div class="w-2 h-2 bg-pink-400 rounded-full animate-bounce"></div>
+        <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+        <div class="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+      </div>
+    </div>
+
+    <!-- Agent URLs Section -->
+    <section class="glass-card animate-slide-up">
+      <div class="flex items-center mb-4">
+        <i class="fas fa-network-wired text-2xl text-blue-400 mr-3"></i>
+        <h2 class="text-xl font-bold text-white">Agent URLs</h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-300 flex items-center">
+            <i class="fas fa-calculator text-green-400 mr-2"></i>
+            Calculator URL
+          </label>
+          <input id="calculator_url" class="glass-input" placeholder="http://<ip>:5001" />
+        </div>
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-300 flex items-center">
+            <i class="fas fa-exchange-alt text-yellow-400 mr-2"></i>
+            Unit Converter URL
+          </label>
+          <input id="unit_url" class="glass-input" placeholder="http://<ip>:5002" />
+        </div>
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-300 flex items-center">
+            <i class="fas fa-chart-bar text-purple-400 mr-2"></i>
+            Statistics URL
+          </label>
+          <input id="statistics_url" class="glass-input" placeholder="http://<ip>:5003" />
+        </div>
+      </div>
+      <div class="mt-6 flex flex-col sm:flex-row items-center gap-3">
+        <button id="btnSave" class="btn-primary">
+          <i class="fas fa-save mr-2"></i>Save URLs
+        </button>
+        <button id="btnTest" class="btn-secondary">
+          <i class="fas fa-wifi mr-2"></i>Test Connection
+        </button>
+        <span id="urlsStatus" class="text-sm text-gray-300 flex items-center">
+          <i class="fas fa-info-circle mr-1"></i>
+          <span>Ready to configure</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Pipeline Section -->
+    <section class="glass-card animate-slide-up-delay">
+      <div class="flex items-center mb-6">
+        <i class="fas fa-project-diagram text-2xl text-green-400 mr-3"></i>
+        <h2 class="text-xl font-bold text-white">Pipeline Configuration</h2>
+      </div>
+      
+      <!-- Calculator Section -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-green-400 mb-3 flex items-center">
+          <i class="fas fa-calculator mr-2"></i>Calculator Agent
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Operation</label>
+            <select id="calc_op" class="glass-select">
+              <option value="add">➕ Addition (+)</option>
+              <option value="subtract">➖ Subtraction (-)</option>
+              <option value="multiply">✖️ Multiplication (×)</option>
+              <option value="divide">➗ Division (÷)</option>
+              <option value="power">⚡ Power (^)</option>
+              <option value="square_root">√ Square Root (√)</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Numbers (CSV)</label>
+            <input id="numbers" class="glass-input" placeholder="10,20,30" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Converter Section -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-yellow-400 mb-3 flex items-center">
+          <i class="fas fa-exchange-alt mr-2"></i>Unit Converter Agent
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">From Unit</label>
+            <select id="from_unit" class="glass-select">
+              <option value="meter">📏 Meter (m)</option>
+              <option value="centimeter">📐 Centimeter (cm)</option>
+              <option value="millimeter">📏 Millimeter (mm)</option>
+              <option value="feet">🦶 Feet (ft)</option>
+              <option value="inch">📏 Inch (in)</option>
+              <option value="kilometer">🛣️ Kilometer (km)</option>
+              <option value="yard">🏈 Yard (yd)</option>
+              <option value="mile">🛣️ Mile (mi)</option>
+              <option value="kilogram">⚖️ Kilogram (kg)</option>
+              <option value="gram">⚖️ Gram (g)</option>
+              <option value="pound">⚖️ Pound (lb)</option>
+              <option value="ounce">⚖️ Ounce (oz)</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">To Unit</label>
+            <select id="to_unit" class="glass-select">
+              <option value="feet">🦶 Feet (ft)</option>
+              <option value="meter">📏 Meter (m)</option>
+              <option value="centimeter">📐 Centimeter (cm)</option>
+              <option value="millimeter">📏 Millimeter (mm)</option>
+              <option value="inch">📏 Inch (in)</option>
+              <option value="kilometer">🛣️ Kilometer (km)</option>
+              <option value="yard">🏈 Yard (yd)</option>
+              <option value="mile">🛣️ Mile (mi)</option>
+              <option value="kilogram">⚖️ Kilogram (kg)</option>
+              <option value="gram">⚖️ Gram (g)</option>
+              <option value="pound">⚖️ Pound (lb)</option>
+              <option value="ounce">⚖️ Ounce (oz)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Section -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center">
+          <i class="fas fa-chart-bar mr-2"></i>Statistics Agent
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Operation</label>
+            <select id="stats_op" class="glass-select">
+              <option value="mean">📊 Mean (Average)</option>
+              <option value="median">📈 Median</option>
+              <option value="mode">🔢 Mode</option>
+              <option value="standard_deviation">📉 Standard Deviation</option>
+              <option value="range">📏 Range</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-300">Extra Numbers (CSV)</label>
+            <input id="stats_numbers" class="glass-input" placeholder="12.5,8.0,15.2" />
+            <small class="text-gray-400 text-xs">Optional: Additional numbers to include with converted value</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Run Button -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-gray-600">
+        <button id="btnRun" class="btn-success">
+          <i class="fas fa-play mr-2"></i>Run Pipeline
+        </button>
+        <span id="runStatus" class="text-sm text-gray-300 flex items-center">
+          <i class="fas fa-info-circle mr-1"></i>
+          <span>Ready to execute</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Steps -->
+      <section class="glass-card animate-slide-up-delay-2">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-list-ol text-2xl text-blue-400 mr-3"></i>
+          <h2 class="text-xl font-bold text-white">Pipeline Steps</h2>
+        </div>
+        <div id="stepsBox" class="glass-output">
+          <div class="text-center text-gray-400 py-8">
+            <i class="fas fa-arrow-down text-2xl mb-2"></i>
+            <p>Steps will appear here after running the pipeline</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Result -->
+      <section class="glass-card animate-slide-up-delay-2">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-trophy text-2xl text-yellow-400 mr-3"></i>
+          <h2 class="text-xl font-bold text-white">Final Result</h2>
+        </div>
+        <div id="resultBox" class="glass-output">
+          <div class="text-center text-gray-400 py-8">
+            <i class="fas fa-star text-2xl mb-2"></i>
+            <p>Result will appear here after running the pipeline</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-gray-400">
+      <p class="text-sm">🧮 A2A Math Agents - Beautiful Agent-to-Agent Communication</p>
+      <p class="text-xs mt-2">Built with ❤️ using Flask, Tailwind CSS, and Font Awesome</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

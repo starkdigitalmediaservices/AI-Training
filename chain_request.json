@@ -1,0 +1,17 @@
+{
+  "sender": "client",
+  "correlation_id": "00000000-0000-0000-0000-000000000001",
+  "trace": [],
+  "message": {
+    "operation": "add",
+    "data": { "numbers": [10, 20, 30] }
+  },
+  "next": {
+    "url": "http://192.168.0.68:5002/convert",
+    "handoff": { "from_unit": "meter", "to_unit": "feet" },
+    "next": {
+      "url": "http://192.168.0.99:5004/message",
+      "handoff": { "operation": "mean", "data": { "numbers": [12.5, 8.0] } }
+    }
+  }
+}

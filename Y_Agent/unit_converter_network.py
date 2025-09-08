@@ -323,19 +323,20 @@ def calculator_api():
 
 @app.route('/message', methods=['POST'])
 def receive_message():
-    """Inter-agent communication endpoint"""
+    """Inter-agent communication endpoint (A2A protocol)"""
     try:
-        data = request.get_json()
-        sender = data.get('sender', 'unknown')
-        message = data.get('message', {})
+        incoming = request.get_json()
+        sender = incoming.get('sender', 'unknown')
+        message = incoming.get('message', {})
         
         # Log the inter-agent communication
         client_ip = request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)
         print(f"🤖 Message from {sender} ({client_ip})")
         
+        # Handle different message formats for unit conversion
         value = message.get('value')
-        from_unit = message.get('from_unit')
-        to_unit = message.get('to_unit')
+        from_unit = message.get('from_unit') or message.get('from') or message.get('fromUnit')
+        to_unit = message.get('to_unit') or message.get('to') or message.get('toUnit')
         
         result = converter.convert_units(value, from_unit, to_unit)
         
@@ -344,6 +345,8 @@ def receive_message():
             "server_ip": converter.my_ip,
             "sender": sender,
             "response": result,
+            "correlation_id": incoming.get('correlation_id'),
+            "trace": incoming.get('trace', []) + [f"{converter.agent_id}@{converter.my_ip}:{converter.port}"],
             "timestamp": datetime.now().isoformat()
         })
     

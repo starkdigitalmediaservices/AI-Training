@@ -1,0 +1,27 @@
+services:
+  unit_converter:
+    build:
+      context: .
+      dockerfile: dockerfile_calculator.txt
+    container_name: unit_converter_agent
+    ports:
+      - "5002:5002"
+    environment:
+      - UNIT_CONVERTER_HOST=0.0.0.0
+      - UNIT_CONVERTER_PORT=5002
+      # Optional: if calculator/statistics are added later
+      - CALCULATOR_HOST=calculator
+      - CALCULATOR_PORT=5001
+      - STATISTICS_HOST=statistics
+      - STATISTICS_PORT=5003
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge

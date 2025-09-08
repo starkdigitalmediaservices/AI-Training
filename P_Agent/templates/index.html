@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Calculator Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .operation-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 237, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #333;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(132, 250, 176, 0.3);
+        }
+
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            min-height: 100px;
+        }
+
+        .result-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #4facfe;
+            font-weight: 600;
+        }
+
+        .error {
+            color: #e74c3c;
+            background: #fdf2f2;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .success {
+            color: #27ae60;
+            background: #f0f9f0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .sample-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .sample-btn {
+            padding: 10px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .sample-btn:hover {
+            background: #dee2e6;
+        }
+
+        .agent-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .agent-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .agent-info p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .operation-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Statistics Calculator Agent</h1>
+            <p>A2A Communication Ready - Your IP: <span id="agent-ip">192.168.0.99:5004</span></p>
+        </div>
+
+        <div class="content">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="numbers">Enter Numbers (comma-separated):</label>
+                    <input type="text" id="numbers" placeholder="e.g., 10, 20, 30, 40, 50" value="10, 15, 20, 25, 30, 25, 15">
+                </div>
+
+                <div class="sample-data">
+                    <button class="sample-btn" onclick="setSampleData([10, 15, 20, 25, 30, 25, 15])">Sample 1</button>
+                    <button class="sample-btn" onclick="setSampleData([1, 2, 3, 4, 5])">Sample 2</button>
+                    <button class="sample-btn" onclick="setSampleData([100, 200, 300, 400, 500])">Sample 3</button>
+                    <button class="sample-btn" onclick="setSampleData([5, 5, 5, 5, 5])">Sample 4</button>
+                    <button class="sample-btn" onclick="setSampleData([1, 2, 2, 3, 3, 3, 4, 4, 5])">Sample 5</button>
+                </div>
+            </div>
+
+            <div class="operation-buttons">
+                <button class="btn btn-primary" onclick="calculate('mean')">📊 Mean</button>
+                <button class="btn btn-primary" onclick="calculate('median')">📈 Median</button>
+                <button class="btn btn-primary" onclick="calculate('mode')">📉 Mode</button>
+                <button class="btn btn-secondary" onclick="calculate('standard_deviation')">📏 Std Dev</button>
+                <button class="btn btn-secondary" onclick="calculate('range')">📐 Range</button>
+                <button class="btn btn-success" onclick="calculate('summary')">📋 Summary</button>
+            </div>
+
+            <div class="result-section">
+                <div class="loading" id="loading">🔄 Calculating...</div>
+                <div id="result"></div>
+            </div>
+
+            <div class="agent-info">
+                <h3>🤖 Agent Information</h3>
+                <p>Your Statistics Agent is ready for A2A communication!</p>
+                <p>Share your IP: <strong>192.168.0.99:5004</strong> with your friends</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5004';
+        
+        function setSampleData(numbers) {
+            document.getElementById('numbers').value = numbers.join(', ');
+        }
+        
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').innerHTML = '';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        function showResult(content, isError = false) {
+            hideLoading();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = content;
+            resultDiv.className = isError ? 'error' : 'success';
+        }
+        
+        function parseNumbers(input) {
+            const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+            if (numbers.length === 0) {
+                throw new Error('No valid numbers found!');
+            }
+            return numbers;
+        }
+        
+        async function calculate(operation) {
+            try {
+                showLoading();
+                
+                const input = document.getElementById('numbers').value.trim();
+                if (!input) {
+                    throw new Error('Please enter some numbers!');
+                }
+                
+                const numbers = parseNumbers(input);
+                
+                const response = await fetch(`${API_BASE}/stats`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        operation: operation,
+                        data: { numbers: numbers }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                const responseData = result.response;
+                
+                if (responseData.success) {
+                    displayResult(operation, responseData, numbers);
+                } else {
+                    showResult(`❌ Error: ${responseData.error}`, true);
+                }
+                
+            } catch (error) {
+                showResult(`❌ Error: ${error.message}`, true);
+            }
+        }
+        
+        function displayResult(operation, data, inputNumbers) {
+            let content = '';
+            
+            switch (operation) {
+                case 'mean':
+                    content = `
+                        <div class="result-title">📊 Mean (Average)</div>
+                        <div class="result-content">
+                            <strong>Result:</strong> ${data.result}<br>
+                            <strong>Sum:</strong> ${data.sum}<br>
+                            <strong>Count:</strong> ${data.count}<br>
+                            <strong>Input:</strong> [${inputNumbers.join(', ')}]
+                        </div>
+                    `;
+                    break;
+                    
+                case 'median':
+                    content = `
+                        <div class="result-title">📈 Median</div>
+                        <div class="result-content">
+                            <strong>Result:</strong> ${data.result}<br>
+                            <strong>Sorted Values:</strong> [${data.sorted_values.join(', ')}]<br>
+                            <strong>Count:</strong> ${data.count}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'mode':
+                    content = `
+                        <div class="result-title">📉 Mode</div>
+                        <div class="result-content">
+                            <strong>Result:</strong> ${Array.isArray(data.result) ? data.result.join(', ') : data.result}<br>
+                            <strong>Frequency:</strong> ${data.frequency}<br>
+                            <strong>All Modes:</strong> [${data.all_modes.join(', ')}]
+                        </div>
+                    `;
+                    break;
+                    
+                case 'standard_deviation':
+                    content = `
+                        <div class="result-title">📏 Standard Deviation</div>
+                        <div class="result-content">
+                            <strong>Result:</strong> ${data.result}<br>
+                            <strong>Variance:</strong> ${data.variance}<br>
+                            <strong>Mean:</strong> ${data.mean}<br>
+                            <strong>Count:</strong> ${data.count}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'range':
+                    content = `
+                        <div class="result-title">📐 Range</div>
+                        <div class="result-content">
+                            <strong>Result:</strong> ${data.result}<br>
+                            <strong>Maximum:</strong> ${data.maximum}<br>
+                            <strong>Minimum:</strong> ${data.minimum}
+                        </div>
+                    `;
+                    break;
+                    
+                case 'summary':
+                    content = `
+                        <div class="result-title">📋 Summary Statistics</div>
+                        <div class="result-content">
+                            <strong>Count:</strong> ${data.data.count}<br>
+                            <strong>Mean:</strong> ${data.data.mean}<br>
+                            <strong>Median:</strong> ${data.data.median}<br>
+                            <strong>Mode:</strong> ${Array.isArray(data.data.mode) ? data.data.mode.join(', ') : data.data.mode}<br>
+                            <strong>Standard Deviation:</strong> ${data.data.standard_deviation}<br>
+                            <strong>Range:</strong> ${data.data.range}<br>
+                            <strong>Minimum:</strong> ${data.data.minimum}<br>
+                            <strong>Maximum:</strong> ${data.data.maximum}
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    content = `<div class="result-content">✅ ${operation}: ${data.result}</div>`;
+            }
+            
+            showResult(content);
+        }
+        
+        // Check if agent is running on page load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    const health = await response.json();
+                    document.getElementById('agent-ip').textContent = `${health.ip}:${health.port}`;
+                }
+            } catch (error) {
+                console.log('Agent not running or not accessible');
+            }
+        });
+    </script>
+</body>
+</html>
